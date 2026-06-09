@@ -3,6 +3,7 @@ FROM debian:bookworm-slim
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
      chromium \
+     socat \
      ca-certificates \
      fonts-liberation \
      fonts-noto-color-emoji \
@@ -23,16 +24,4 @@ RUN apt-get update \
 
 EXPOSE 9222
 
-CMD ["chromium", \
-     "--headless", \
-     "--no-sandbox", \
-     "--disable-dev-shm-usage", \
-     "--disable-gpu", \
-     "--disable-software-rasterizer", \
-     "--disable-setuid-sandbox", \
-     "--remote-debugging-address=0.0.0.0", \
-     "--remote-debugging-port=9222", \
-     "--window-size=1280,720", \
-     "--hide-scrollbars", \
-     "--mute-audio", \
-     "about:blank"]
+CMD ["sh", "-c", "chromium --headless --no-sandbox --disable-dev-shm-usage --disable-gpu --disable-software-rasterizer --disable-setuid-sandbox --remote-debugging-port=9223 --remote-allow-origins=* --window-size=1280,720 --hide-scrollbars --mute-audio about:blank & socat TCP-LISTEN:9222,fork,reuseaddr TCP:127.0.0.1:9223"]

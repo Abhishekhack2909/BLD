@@ -37,6 +37,8 @@ export default function Home() {
 
     ws.onopen = () => {
       setMessage("Control socket connected.");
+      console.log("[client] WebSocket opened, sending test message");
+      ws.send(JSON.stringify({ type: "test" }));
     };
 
     ws.onmessage = (event) => {
@@ -59,7 +61,9 @@ export default function Home() {
     };
 
     ws.onclose = () => {
-      wsRef.current = null;
+      if (wsRef.current === ws) {
+        wsRef.current = null;
+      }
     };
 
     return () => ws.close();
@@ -106,8 +110,16 @@ export default function Home() {
   }
 
   function sendControl(payload: Record<string, unknown>) {
+    console.log("[client] sendControl called with:", payload);
     const ws = wsRef.current;
-    if (!ws || ws.readyState !== WebSocket.OPEN) return;
+    if (!ws) {
+      console.warn("[client] WebSocket is null!");
+      return;
+    }
+    if (ws.readyState !== WebSocket.OPEN) {
+      console.warn("[client] WebSocket is not OPEN. readyState:", ws.readyState);
+      return;
+    }
     ws.send(JSON.stringify(payload));
   }
 
@@ -123,12 +135,14 @@ export default function Home() {
   }
 
   function handleClick(event: MouseEvent<HTMLImageElement>) {
+    console.log("[client] Click event triggered");
     screenRef.current?.focus();
     const point = getBrowserPoint(event);
     sendControl({ type: "click", ...point });
   }
 
   function handleWheel(event: WheelEvent<HTMLImageElement>) {
+    console.log("[client] Wheel event triggered");
     event.preventDefault();
     const point = getBrowserPoint(event);
     sendControl({
@@ -140,6 +154,7 @@ export default function Home() {
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLImageElement>) {
+    console.log("[client] Keydown event triggered, key:", event.key);
     if (event.key === "Tab") event.preventDefault();
 
     sendControl({

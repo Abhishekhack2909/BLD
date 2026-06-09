@@ -58,6 +58,7 @@ app.post("/api/browser/stop", async (_req, res) => {
 });
 
 wss.on("connection", (socket) => {
+  process.stdout.write("[ws] New client connected\n");
   socket.send(
     JSON.stringify({
       type: "status",
@@ -69,11 +70,17 @@ wss.on("connection", (socket) => {
   socket.on("message", async (raw) => {
     try {
       const payload = JSON.parse(raw.toString());
+      process.stdout.write(`[ws] Input message received: ${payload.type} ${JSON.stringify(payload)}\n`);
       await session.handleInput(payload);
     } catch (error) {
+      process.stderr.write(`[ws] Error handling input: ${error instanceof Error ? error.stack : error}\n`);
       const message = error instanceof Error ? error.message : "Input handling failed";
       socket.send(JSON.stringify({ type: "status", status: "error", message }));
     }
+  });
+
+  socket.on("close", () => {
+    process.stdout.write("[ws] Client disconnected\n");
   });
 });
 

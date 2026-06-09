@@ -1,0 +1,15 @@
+services:
+  app:
+    build: .
+    working_dir: /app
+    command: npm run dev
+    ports:
+      - "3000:3000"
+      - "4000:4000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+      NEXT_PUBLIC_WS_URL: ws://localhost:4000/ws
+      CLIENT_ORIGIN: http://localhost:3000
+    volumes:
+      - .:/app
+      - /var/run/docker.sock:/var/run/docker.sock

@@ -1,0 +1,17 @@
+
+> bld-remote-browser@0.1.0 dev
+> concurrently "next dev" "node server/index.js"
+
+[1] Control server listening on http://localhost:4000
+[0]   ▲ Next.js 14.2.35
+[0]   - Local:        http://localhost:3000
+[0] 
+[0]  ✓ Starting...
+[0]  ✓ Ready in 3.1s
+[0]  ○ Compiling / ...
+[0]  ✓ Compiled / in 4s (463 modules)
+[0]  GET / 200 in 4340ms
+[0]  GET / 200 in 114ms
+[1] [browser] docker: request returned 502 Bad Gateway for API route and version http://%2F%2F.%2Fpipe%2FdockerDesktopLinuxEngine/v1.54/containers/create?name=bld-remote-browser-1780858474716, check if the server supports the requested API version
+[1] 
+[1] Run 'docker run --help' for more information

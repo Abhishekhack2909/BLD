@@ -1,0 +1,27 @@
+{
+  "name": "bld-remote-browser",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"next dev\" \"node server/index.js\"",
+    "dev:ui": "next dev",
+    "dev:server": "node server/index.js",
+    "build": "next build",
+    "start": "concurrently \"next start\" \"node server/index.js\""
+  },
+  "dependencies": {
+    "chrome-remote-interface": "^0.33.3",
+    "concurrently": "^8.2.2",
+    "express": "^4.19.2",
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.5.3"
+  }
+}

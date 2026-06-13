@@ -1,6 +1,6 @@
 # BLD Remote Browser Control
 
-A high-performance remote browser control system built for the BLD SDE Intern assignment. The system spins up Chromium in a local Docker container, streams frames to a Next.js frontend, and forwards interactive events (clicks, scrolls, keystrokes) back to the container in real time.
+A high-performance remote browser control system built for the BLD . The system spins up Chromium in a local Docker container, streams frames to a Next.js frontend, and forwards interactive events (clicks, scrolls, keystrokes) back to the container in real time.
 
 ---
 
